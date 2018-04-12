@@ -3,28 +3,36 @@
 var express = require('express'),
   app = express(),
   port = process.env.PORT || 3000,
+  Task = require('./api/models/todoListModel'),
+  User = require('./api/models/userModel'),
   bodyParser = require('body-parser'),
-  jsonwebtoken = require("jsonwebtoken");
+  cors = require('cors'),
+  jsonwebtoken = require("jsonwebtoken"),
+  routes = require('./api/routes/apiGatewayRoutes');
 
 
+
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
+
   if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
+  
+  
     jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', function(err, decode) {
+	//console.log(decode);
       if (err) req.user = undefined;
-      req.body.email = decode.email;
-      console.log(decode);
+      req.user = decode;
       next();
     });
   } else {
-    console.log("no token needed");
-    //req.body.email = undefined;
+    req.user = undefined;
     next();
   }
 });
-var routes = require('./api/routes/todoListRoutes');
+
 routes(app);
 
 app.use(function(req, res) {

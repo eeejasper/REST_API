@@ -25,13 +25,15 @@
   },
   "homepage": "https://github.com/generalgmt/RESTfulAPITutorial#readme",
   "devDependencies": {
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.11.0"
   },
   "dependencies": {
     "bcrypt": "^1.0.2",
     "body-parser": "^1.15.2",
+    "cors": "^2.8.4",
     "express": "^4.14.0",
     "jsonwebtoken": "^7.3.0",
-    "mongoose": "^4.7.2"
+    "mongoose": "^4.7.2",
+    "nedb": "^1.8.0"
   }
 }
